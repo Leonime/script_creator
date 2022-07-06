@@ -22,7 +22,7 @@ def main(main_path, default=None, audio_track=None, sub_track=None, no_sub=None,
                     command = f'ffmpeg -i "{current_path}/{file.name}" -map_metadata 0 '
                     if fonts:
                         command += '-map 0:t '
-                    command += '-map 0:v ' if video_tack else '-map 0:v:0 '
+                    command += '-map 0:v:0 ' if video_tack else '-map 0:v '
                     command += f'-map 0:a:{audio_track} -disposition:a:0 default '\
                         if audio_track\
                         else '-map 0:a -disposition:a:0 default '

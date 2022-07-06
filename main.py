@@ -24,7 +24,7 @@ def main(main_path, default=None, audio_track=None, sub_track=None, no_sub=None,
                         command += '-map 0:t '
                     command += '-map 0:v:0 ' if video_tack else '-map 0:v '
                     command += f'-map 0:a:{audio_track} -disposition:a:0 default '\
-                        if audio_track\
+                        if audio_track >= 0\
                         else '-map 0:a -disposition:a:0 default '
 
                     command += '-map 0:s -disposition:s:0 0 ' \

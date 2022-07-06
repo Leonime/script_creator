@@ -33,7 +33,7 @@ def main(main_path, default=None, audio_track=None, sub_track=None, no_sub=None,
                     command += f'-c copy "{current_path}/output/{file.name}"\n'
                     f.write(command)
                 if test:
-                    continue
+                    break
     else:
         params_index = {
             'seiya': '-map 0:v -map_metadata 0 -map 0:a:5 -map 0:a:0 -disposition:a:0 default '

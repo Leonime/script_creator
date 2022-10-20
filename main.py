@@ -61,7 +61,7 @@ if __name__ == '__main__':
                                         description='Generates a script to edit vidio files')
     my_parser.add_argument('-p', '--path', action='store', type=str, required=True, help='Path to work on')
     my_parser.add_argument('-a', '--audio_track', action='store', type=int, required=False, help='Audio to default')
-    my_parser.add_argument('-ka', '--keep_audios', action='store_true', type=int, required=False,
+    my_parser.add_argument('-ka', '--keep_audios', action='store_true', required=False,
                            help='Don\'t delete extra audio tracks')
     my_parser.add_argument('-s', '--sub_track', action='store', type=int, required=False, help='Sub to default')
     my_parser.add_argument('-n', '--no_sub', action='store_true', help='No default sub')

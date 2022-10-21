@@ -33,7 +33,7 @@ def main(main_path, default=None, audio_track=None, sub_track=None, no_sub=None,
 
                     command += f'-disposition:a:{default_audio} 0 '\
                         if default_audio\
-                        else ' -disposition:a:0 0 '
+                        else '-disposition:a:0 0 '
 
                     command += '-map 0:s -disposition:s:0 0 ' \
                         if no_sub\
@@ -41,7 +41,7 @@ def main(main_path, default=None, audio_track=None, sub_track=None, no_sub=None,
 
                     command += f'-disposition:s:{default_sub} 0 ' \
                         if default_sub \
-                        else ' -disposition:s:0 0 '
+                        else '-disposition:s:0 0 '
 
                     command += f'-c copy "{current_path}/output/{file.name}"\n'
                     f.write(command)

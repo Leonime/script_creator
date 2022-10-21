@@ -3,7 +3,7 @@ from pathlib import Path
 
 
 def main(main_path, default=None, audio_track=None, sub_track=None, no_sub=None, fonts=None, video_tack=None, test=None,
-         keep_audio=None):
+         keep_audio=None, default_audio=None, default_sub=None):
     current_path = Path(main_path)
     output = current_path / 'output'
     suffix_index = ['.mkv', '.mp4']
@@ -31,9 +31,18 @@ def main(main_path, default=None, audio_track=None, sub_track=None, no_sub=None,
                             if audio_track >= 0\
                             else '-map 0:a -disposition:a:0 default '
 
+                    command += f'-disposition:a:{default_audio} 0 '\
+                        if default_audio\
+                        else ' -disposition:a:0 0 '
+
                     command += '-map 0:s -disposition:s:0 0 ' \
                         if no_sub\
                         else f'-map 0:s -disposition:s:{sub_track} default '
+
+                    command += f'-disposition:s:{default_sub} 0 ' \
+                        if default_sub \
+                        else ' -disposition:s:0 0 '
+
                     command += f'-c copy "{current_path}/output/{file.name}"\n'
                     f.write(command)
                 if test:
@@ -88,4 +97,4 @@ if __name__ == '__main__':
                                 ' works')
     args = my_parser.parse_args()
     main(args.path, args.default, args.audio_track, args.sub_track, args.no_sub, args.fonts, args.video_tack, args.test,
-         args.keep_audios)
+         args.keep_audios, args.default_audio, args.default_sub)

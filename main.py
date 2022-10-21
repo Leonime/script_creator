@@ -59,16 +59,33 @@ if __name__ == '__main__':
     my_parser = argparse.ArgumentParser(prog='script_creator',
                                         usage='%(prog)s [options] --path',
                                         description='Generates a script to edit vidio files')
-    my_parser.add_argument('-p', '--path', action='store', type=str, required=True, help='Path to work on')
-    my_parser.add_argument('-a', '--audio_track', action='store', type=int, required=False, help='Audio to default')
+    my_parser.add_argument('-p', '--path', action='store', type=str, required=True,
+                           help='The path to where the videos are and where the script will be created')
+    my_parser.add_argument('-a', '--audio_track', action='store', type=int, required=False,
+                           help='The new default audio stream')
     my_parser.add_argument('-ka', '--keep_audios', action='store_true', required=False,
-                           help='Don\'t delete extra audio tracks')
+                           help='This will not delete extra audio streams')
+    my_parser.add_argument('-da', '--default_audio', action='store', type=int, required=False,
+                           help='In case the default audio stream isn\'t the first one please specify here')
     my_parser.add_argument('-s', '--sub_track', action='store', type=int, required=False, help='Sub to default')
-    my_parser.add_argument('-n', '--no_sub', action='store_true', help='No default sub')
-    my_parser.add_argument('-d', '--default', action='store_true', help='Default script')
-    my_parser.add_argument('-f', '--fonts', action='store_true', help='Load fonts')
-    my_parser.add_argument('-v', '--video_tack', action='store_true', help='fix video track')
-    my_parser.add_argument('-t', '--test', action='store_true', help='fix video track')
+    my_parser.add_argument('-ds', '--default_sub', action='store', type=int, required=False,
+                           help='In case the default subtitle stream isn\'t the first one please specify here')
+    my_parser.add_argument('-n', '--no_sub', action='store_true',
+                           help='With this flag set up, there will be no sub selected by default')
+    my_parser.add_argument('-d', '--default', action='store_true',
+                           help='this is here because I\'m dumb and forgot his purpose, but it has been implemented on'
+                                ' the code so it stays, because I\'m too lazy to refactor')
+    my_parser.add_argument('-f', '--fonts', action='store_true',
+                           help='Sometimes the container has fonts included, this will import them the new file, if the'
+                                ' container has no fonts the script will fail, if that happens just remove this flag')
+    my_parser.add_argument('-v', '--video_tack', action='store_true',
+                           help='Sometimes without this option the script will fail, I think is because a poorly made'
+                                ' container, leaving it on all the time affects nothing, but I leave it as an option so'
+                                ' it can be removed, because it should not be required, but it fixes poorly made'
+                                ' container')
+    my_parser.add_argument('-t', '--test', action='store_true',
+                           help='It will only create a single file script, so you can test if the generated script'
+                                ' works')
     args = my_parser.parse_args()
     main(args.path, args.default, args.audio_track, args.sub_track, args.no_sub, args.fonts, args.video_tack, args.test,
          args.keep_audios)

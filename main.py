@@ -2,6 +2,10 @@ import argparse
 from pathlib import Path
 
 
+def escape_string(s:str):
+    s = s.replace("`", "\`")
+    return s
+
 def main(main_path, default=None, audio_track=None, sub_track=None, no_sub=None, fonts=None, video_tack=None, test=None,
          keep_audio=None, default_audio=None, default_sub=None):
     current_path = Path(main_path)
@@ -20,7 +24,7 @@ def main(main_path, default=None, audio_track=None, sub_track=None, no_sub=None,
         with open(current_path / 're-encode.sh', 'w') as f:
             for file in sorted(current_path.iterdir()):
                 if file.is_file and file.suffix in suffix_index:
-                    command = f'ffmpeg -i "{current_path}/{file.name}" -map_metadata 0 '
+                    command = f'ffmpeg -i "{current_path}/{escape_string(file.name)}" -map_metadata 0 '
                     if fonts:
                         command += '-map 0:t '
                     command += '-map 0:v:0 ' if video_tack else '-map 0:v '
@@ -44,7 +48,7 @@ def main(main_path, default=None, audio_track=None, sub_track=None, no_sub=None,
                             if default_sub \
                             else f'-map 0:s -disposition:s:{sub_track} default '
 
-                    command += f'-c copy "{current_path}/output/{file.name}"\n'
+                    command += f'-c copy "{current_path}/output/{escape_string(file.name)}"\n'
                     f.write(command)
                 if test:
                     break

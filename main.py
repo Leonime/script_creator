@@ -24,24 +24,25 @@ def main(main_path, default=None, audio_track=None, sub_track=None, no_sub=None,
                     if fonts:
                         command += '-map 0:t '
                     command += '-map 0:v:0 ' if video_tack else '-map 0:v '
-                    if keep_audio:
-                        command += f'-map 0:a -disposition:a:{audio_track} default '
+                    if not default_audio:
+                        if keep_audio:
+                            command += f'-map 0:a -disposition:a:{audio_track} default '
+                        else:
+                            command += f'-map 0:a:{audio_track} -disposition:a:0 default '\
+                                if audio_track >= 0\
+                                else '-map 0:a -disposition:a:0 default '
                     else:
-                        command += f'-map 0:a:{audio_track} -disposition:a:0 default '\
-                            if audio_track >= 0\
-                            else '-map 0:a -disposition:a:0 default '
-
-                    command += f'-disposition:a:{default_audio} 0 '\
-                        if default_audio\
-                        else '-disposition:a:0 0 '
+                        command += f'-disposition:a:{default_audio} 0 '\
+                            if default_audio\
+                            else '-disposition:a:0 0 '
 
                     command += '-map 0:s -disposition:s:0 0 ' \
                         if no_sub\
-                        else f'-map 0:s -disposition:s:{sub_track} default '
-
-                    command += f'-disposition:s:{default_sub} 0 ' \
-                        if default_sub \
-                        else '-disposition:s:0 0 '
+                        else ''
+                    if not no_sub:
+                        command += f'-map 0:s -disposition:s:{default_sub} default ' \
+                            if default_sub \
+                            else f'-map 0:s -disposition:s:{sub_track} default '
 
                     command += f'-c copy "{current_path}/output/{file.name}"\n'
                     f.write(command)

@@ -44,9 +44,9 @@ def main(main_path, default=None, audio_track=None, sub_track=None, no_sub=None,
                         if no_sub\
                         else ''
                     if not no_sub:
-                        command += f'-map 0:s -disposition:s:{default_sub} default ' \
+                        command += f'-map 0:s -disposition:s:s:{default_sub} default ' \
                             if default_sub \
-                            else f'-map 0:s -disposition:s:{sub_track} default '
+                            else f'-map 0:s -disposition:s:s:{sub_track} default '
 
                     command += f'-c copy "{current_path}/output/{escape_string(file.name)}"\n'
                     f.write(command)
